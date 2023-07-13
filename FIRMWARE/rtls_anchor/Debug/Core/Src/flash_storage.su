@@ -1,0 +1,3 @@
+../Core/Src/flash_storage.c:4:10:getSector	24	static
+../Core/Src/flash_storage.c:42:10:flashWriteData	40	static
+../Core/Src/flash_storage.c:69:6:flashReadData	24	static

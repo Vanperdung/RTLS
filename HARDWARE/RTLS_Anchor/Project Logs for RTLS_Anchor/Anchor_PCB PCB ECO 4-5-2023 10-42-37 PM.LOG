@@ -1,4 +1,0 @@
-Change Component Footprint: Designator=L1 Old Footprint=L-SMD-M-7.3x4.5 New Footprint=L-SMD-D-7.3x7.3
-Added Pin To Net: NetName=NetR5_1 Pin=R5-1
-Added Pin To Net: NetName=NetR5_1 Pin=R6-1
-Added Pin To Net: NetName=NetR5_1 Pin=U2-4

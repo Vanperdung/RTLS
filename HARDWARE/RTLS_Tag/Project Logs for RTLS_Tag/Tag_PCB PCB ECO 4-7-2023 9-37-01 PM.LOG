@@ -1,3 +1,0 @@
-Change Component Footprint: Designator=C7 Old Footprint=CAP_0805 New Footprint=CAP_0603
-Added Pin To Net: NetName=5V Pin=USB1-1
-Change Net Name : Old Net Name=5V New Net Name=+5V

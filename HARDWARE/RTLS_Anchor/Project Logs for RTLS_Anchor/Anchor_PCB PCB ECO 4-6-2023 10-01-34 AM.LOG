@@ -1,7 +1,0 @@
-Removed Pin From Net: NetName=NetC27_1 Pin=R5-1
-Removed Pin From Net: NetName=NetC27_1 Pin=R6-1
-Removed Pin From Net: NetName=NetC27_1 Pin=U2-4
-Change Component Footprint: Designator=U5 Old Footprint=MODULE_ESP32-WROOM-32 New Footprint=ESP32_UE
-Added Pin To Net: NetName=NetR5_1 Pin=R5-1
-Added Pin To Net: NetName=NetR5_1 Pin=R6-1
-Added Pin To Net: NetName=NetR5_1 Pin=U2-4
