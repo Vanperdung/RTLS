@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=GND Pin=B1-1
+Removed Pin From Net: NetName=NRST Pin=B1-2
+Removed Pin From Net: NetName=GND Pin=B2-1
+Removed Pin From Net: NetName=BUT Pin=B2-2
+Removed Member From Class: ClassName=U_STM32 Member=B1
+Removed Member From Class: ClassName=U_STM32 Member=B2
+Added Component: Designator=BLD1(SW4 - SMD)
+Add component (AddParameter): Name = "Value"; Value = "Button chip 4 pin"; VariantName = "[No Variations]"
+Added Component: Designator=BLD2(SW4 - SMD)
+Add component (AddParameter): Name = "Value"; Value = "Button chip 4 pin"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=BLD1-1
+Added Pin To Net: NetName=NRST Pin=BLD1-2
+Added Pin To Net: NetName=GND Pin=BLD2-1
+Added Pin To Net: NetName=BUT Pin=BLD2-2
+Added Member To Class: ClassName=U_STM32 Member=Component BLD1 BLD/BTN
+Added Member To Class: ClassName=U_STM32 Member=Component BLD2 BLD/BTN

@@ -1,0 +1,24 @@
+Removed Member From Class: ClassName=U_ESP32 Member=D9
+Removed Member From Class: ClassName=U_ESP32 Member=R14
+Change Component Designator: OldDesignator=R41 NewDesignator=R40
+Added Member To Class: ClassName=U_ESP32 Member=Component D7 BLUE
+Added Member To Class: ClassName=U_ESP32 Member=Component D8 BLUE
+Added Member To Class: ClassName=U_STM32 Member=Component D10 GREEN
+Added Member To Class: ClassName=U_ESP32 Member=Component R8 330R
+Added Member To Class: ClassName=U_ESP32 Member=Component R10 10k
+Added Member To Class: ClassName=U_ESP32 Member=Component R11 10k
+Added Member To Class: ClassName=U_ETHERNET Member=Component R13 49.9R
+Added Member To Class: ClassName=U_ETHERNET Member=Component R15 33R
+Added Member To Class: ClassName=U_ETHERNET Member=Component R17 33R
+Added Member To Class: ClassName=U_ETHERNET Member=Component R19 10k
+Added Member To Class: ClassName=U_ETHERNET Member=Component R21 10k
+Added Member To Class: ClassName=U_ETHERNET Member=Component R23 10R
+Added Member To Class: ClassName=U_ETHERNET Member=Component R25 12.4k
+Added Member To Class: ClassName=U_ETHERNET Member=Component R27 330R
+Added Member To Class: ClassName=U_ETHERNET Member=Component R28 10k
+Added Member To Class: ClassName=U_ETHERNET Member=Component R30 10k
+Added Member To Class: ClassName=U_ETHERNET Member=Component R32 10k
+Added Member To Class: ClassName=U_ETHERNET Member=Component R33 10k
+Added Member To Class: ClassName=U_STM32 Member=Component R35 1k
+Added Member To Class: ClassName=U_STM32 Member=Component R37 1k
+Added Member To Class: ClassName=U_STM32 Member=Component R38 100k

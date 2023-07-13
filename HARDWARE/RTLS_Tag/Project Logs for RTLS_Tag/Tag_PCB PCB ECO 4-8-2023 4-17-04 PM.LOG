@@ -1,0 +1,31 @@
+Removed Pin From Net: NetName=LED1 Pin=IC6-81
+Removed Pin From Net: NetName=LED2 Pin=IC6-82
+Removed Pin From Net: NetName=LED3 Pin=IC6-83
+Change Component Designator: OldDesignator=IC1 NewDesignator=IC2
+Change Component Designator: OldDesignator=IC2 NewDesignator=IC1
+Change Component Designator: OldDesignator=R11 NewDesignator=R12
+Change Component Designator: OldDesignator=R12 NewDesignator=R13
+Change Component Designator: OldDesignator=R13 NewDesignator=R14
+Change Component Designator: OldDesignator=R14 NewDesignator=R15
+Change Component Designator: OldDesignator=R15 NewDesignator=R16
+Change Component Designator: OldDesignator=R16 NewDesignator=R17
+Change Component Designator: OldDesignator=R17 NewDesignator=R18
+Change Component Designator: OldDesignator=R18 NewDesignator=R19
+Added Component: Designator=B2(BUTTON NGHIENG)
+Added Component: Designator=R11(RES-SMD-0603)
+Add component (AddParameter): Name = "Class"; Value = "Passive"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Generic Components"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "08/06/2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Hobart Technology Centre"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=B2-1
+Added Pin To Net: NetName=LED1 Pin=IC6-55
+Added Pin To Net: NetName=LED2 Pin=IC6-56
+Added Pin To Net: NetName=LED3 Pin=IC6-57
+Added Pin To Net: NetName=+3.3V Pin=R11-1
+Added Pin To Net: NetName=BUT Pin=B2-2
+Added Pin To Net: NetName=BUT Pin=IC6-58
+Added Pin To Net: NetName=BUT Pin=R11-2
+Added Net: Name=BUT
+Added Member To Class: ClassName=U_STM32 Member=Component B2 Button 3x4x2.5
+Added Member To Class: ClassName=U_POWER Member=Component IC2 RT9013
+Added Member To Class: ClassName=U_STM32 Member=Component R15 1k

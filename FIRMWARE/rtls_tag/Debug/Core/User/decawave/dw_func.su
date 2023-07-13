@@ -1,0 +1,6 @@
+../Core/User/decawave/dw_func.c:9:13:spiWrite	24	static
+../Core/User/decawave/dw_func.c:20:13:spiRead	24	static
+../Core/User/decawave/dw_func.c:31:13:spiSetSpeed	16	static
+../Core/User/decawave/dw_func.c:45:13:reset	16	static
+../Core/User/decawave/dw_func.c:52:6:dwReset	8	static
+../Core/User/decawave/dw_func.c:59:13:delayms	16	static

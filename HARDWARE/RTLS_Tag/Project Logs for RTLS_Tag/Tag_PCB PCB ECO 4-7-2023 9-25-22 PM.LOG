@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=5V Pin=J2-1
+Removed Pin From Net: NetName=D_N Pin=J2-2
+Removed Pin From Net: NetName=D_P Pin=J2-3
+Removed Pin From Net: NetName=GND Pin=J2-5
+Removed Pin From Net: NetName=GND Pin=J2-5
+Removed Pin From Net: NetName=GND Pin=J2-5
+Removed Member From Class: ClassName=U_POWER Member=J2
+Added Component: Designator=USB1(USB Micro 5p DIP)
+Add component (AddParameter): Name = "Ma_Hang"; Value = "MH005145"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ten"; Value = "MicroUSB MK5P DIP"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=D_N Pin=USB1-2
+Added Pin To Net: NetName=D_P Pin=USB1-3
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Pin To Net: NetName=+5V Pin=USB1-1
+Added Net: Name=+5V
+Added Member To Class: ClassName=U_POWER Member=Component USB1 USB Micro 5p DIP

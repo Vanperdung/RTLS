@@ -1,0 +1,9 @@
+Change Component Footprint: Designator=R7 Old Footprint=RES-SMD-0603 New Footprint=RES-SMD-0805
+Change Component Footprint: Designator=R8 Old Footprint=RES-SMD-0603 New Footprint=RES-SMD-0805
+Change Component Footprint: Designator=R9 Old Footprint=RES-SMD-0603 New Footprint=RES-SMD-0805
+Change Component Footprint: Designator=R10 Old Footprint=RES-SMD-0603 New Footprint=RES-SMD-0805
+Change Component Footprint: Designator=R11 Old Footprint=RES-SMD-0603 New Footprint=RES-SMD-0805
+Added Pin To Net: NetName=CH340_RXD Pin=U5-34
+Added Pin To Net: NetName=CH340_TXD Pin=U5-35
+Added Member To Class: ClassName=U_STM32 Member=Component R39 10k
+Added Member To Class: ClassName=U_STM32 Member=Component R40 0R

@@ -1,0 +1,17 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:anchor-antenna-delay Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls-sniffer Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls-tag-main Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_test_range_receive Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_test_range_transmit Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_anchor Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_tag Debug
+eclipse.preferences.version=1
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:anchor-antenna-delay\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:anchor-antenna-delay\ Debug/activeLaunchTarget=null\:---
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls-anchor-main\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls-anchor-main\ Debug/activeLaunchTarget=null\:---
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls-sniffer\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls-sniffer\ Debug/activeLaunchTarget=null\:---
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls-tag-main\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_anchor\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_tag\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_test_range_receive\ Debug/activeLaunchMode=debug
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rtls_test_range_transmit\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:tag-antenna-delay\ Debug/activeLaunchMode=debug

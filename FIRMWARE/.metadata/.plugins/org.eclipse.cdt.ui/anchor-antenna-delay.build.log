@@ -1,0 +1,10 @@
+20:24:18 **** Build of configuration Debug for project anchor-antenna-delay ****
+make -j8 all 
+arm-none-eabi-size   anchor-antenna-delay.elf 
+   text	   data	    bss	    dec	    hex	filename
+  50900	    596	   2172	  53668	   d1a4	anchor-antenna-delay.elf
+Finished building: default.size.stdout
+ 
+
+20:24:18 Build Finished. 0 errors, 0 warnings. (took 365ms)
+

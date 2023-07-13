@@ -1,0 +1,16 @@
+{
+    "idf.adapterTargetName": "esp32",
+    "files.associations": {
+        "wifi_user.h": "c",
+        "header.h": "c",
+        "math.h": "c",
+        "stdint.h": "c",
+        "mqtt_user.h": "c",
+        "uart_user.h": "c",
+        "common_user.h": "c",
+        "esp_attr.h": "c",
+        "esp_sleep.h": "c",
+        "mqtt_client.h": "c",
+        "gpio.h": "c"
+    }
+}

@@ -1,0 +1,481 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD21\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">4/8/2023</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">11:23:50 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc" class="file"><acronym title="D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc">D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">47</td></tr>
+</table>
+</td>
+</table><a name="ID02LACH0DWG24OCNRJ4ZP0UAPWLCUUQYBCJWKR4BTDNAVY1D2XA0G"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDO1DX0KU0CDAPGVN0WOGVXB02PYSNELTRUQ4ITCNNSVW5GDHCIHJ">Clearance Constraint (Gap=8mil) (All),(All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDYOIHTVQWT1QUO5HDJRX10FXSPHTG2D5DEVXWU3FWHNCKYRSQ3HL">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAWEOYTO2Y2KILQCHKBY3U1SVWNJ2RQSNHTHYIBPNNMYEGWTSAERD">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDPAP0LETFXR5ZMKTW1OAIUNQ130ADC3QMFSN4RK3T4Z0KNVPFXMM">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDBORX0WUMV5PLITY2WTLSYGBWRKTOGMUUMSQH42HUMLYNJ2TEHA5C">Width Constraint (Min=5mil) (Max=100mil) (Preferred=10mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDYWLLD4J00LOAP4PE4RS5S4ELRNE2ZVYMFMNFKBNGMFU3Z0HRW1CP">Power Plane Connect Rule(Relief Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDZND5EITNTB14EQQFDTT3MVCJ1BOFV2VA20G3RWNBWLVNNBVBAP5F">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAVTXRND5NLAOLBAUPL4MAZUB0EGJ5EG15XVRFZHRZQMY0QC1CBLE">Hole To Hole Clearance (Gap=10mil) (All),(All)</a></td>
+<td class="column2">38</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDUKJU31JTC5TFPHRIBE2DVU0K1OMYFVNJEKBHQTKNISAZ1H3I4ZLC">Minimum Solder Mask Sliver (Gap=0mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDQIA34TWJF5CWI5OZTSW1HRYOPG4TDGII2BDSIBGCIR3BUWY03STM">Silk To Solder Mask (Clearance=0mil) (IsPad),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDPKRN3O5IEV4DPYVF1GIMZJQHKMGBVZ2WOSXW3EDEJCRYCSW53TKM">Silk to Silk (Clearance=0mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDFJFNDSWFVWZNGRRUVCJT420LSJ1QIM4S1PFVWVMHDLNWF54U2U">Net Antennae (Tolerance=0mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID3D1PRGWUJSHYIIX5C2PEOLBENPJX5WIHXAYFL4GZT13BW42LEIKN">Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">47</td>
+</tr>
+</table><br><a name="IDO1DX0KU0CDAPGVN0WOGVXB02PYSNELTRUQ4ITCNNSVW5GDHCIHJ"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Clearance Constraint (Gap=8mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1707.016mil|Location2.X=1727.121mil|Location1.Y=1909.033mil|Location2.Y=1925.283mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1707.016mil|Location2.X=1727.121mil|Location1.Y=1909.033mil|Location2.Y=1925.283mil|Absolute=True">Clearance Constraint: (10.037mil &lt; 15mil) Between Pad SW2-1(1724mil,1927mil) on Bottom Layer And Region (0 hole(s)) Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715.875mil|Location2.X=1732.125mil|Location1.Y=1895.499mil|Location2.Y=1911.749mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715.875mil|Location2.X=1732.125mil|Location1.Y=1895.499mil|Location2.Y=1911.749mil|Absolute=True">Clearance Constraint: (12.303mil &lt; 15mil) Between Pad SW2-2(1724mil,1892.551mil) on Bottom Layer And Region (0 hole(s)) Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1723.872mil|Location2.X=1740.266mil|Location1.Y=1905.956mil|Location2.Y=1922.492mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1723.872mil|Location2.X=1740.266mil|Location1.Y=1905.956mil|Location2.Y=1922.492mil|Absolute=True">Clearance Constraint: (5.22mil &lt; 15mil) Between Region (0 hole(s)) Bottom Layer And Region (0 hole(s)) Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715.875mil|Location2.X=1732.125mil|Location1.Y=1895.4mil|Location2.Y=1911.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1715.875mil|Location2.X=1732.125mil|Location1.Y=1895.4mil|Location2.Y=1911.65mil|Absolute=True">Clearance Constraint: (12.501mil &lt; 15mil) Between Region (0 hole(s)) Bottom Layer And Track (1724mil,1749mil)(1724mil,1889.775mil) on Bottom Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDAWEOYTO2Y2KILQCHKBY3U1SVWNJ2RQSNHTHYIBPNNMYEGWTSAERD"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2054.37mil|Location2.X=2254.489mil|Location1.Y=2209mil|Location2.Y=2615.574mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2054.37mil|Location2.X=2254.489mil|Location1.Y=2209mil|Location2.Y=2615.574mil|Absolute=True">Un-Routed Net Constraint: Net +3.3V Between Track (2144.37mil,2319mil)(2154.37mil,2309mil) on Top Layer And Track (2154.489mil,2515.574mil)(2154.489mil,2519.511mil) on Bottom Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDZND5EITNTB14EQQFDTT3MVCJ1BOFV2VA20G3RWNBWLVNNBVBAP5F"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1072.08mil|Location2.X=1195.377mil|Location1.Y=1073.469mil|Location2.Y=1196.767mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1072.08mil|Location2.X=1195.377mil|Location1.Y=1073.469mil|Location2.Y=1196.767mil|Absolute=True">Hole Size Constraint: (122.047mil &gt; 100mil) Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer Actual Hole Size = 122.047mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1070.438mil|Location2.X=1193.735mil|Location1.Y=2532.249mil|Location2.Y=2655.546mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1070.438mil|Location2.X=1193.735mil|Location1.Y=2532.249mil|Location2.Y=2655.546mil|Absolute=True">Hole Size Constraint: (122.047mil &gt; 100mil) Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer Actual Hole Size = 122.047mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3360.438mil|Location2.X=3483.735mil|Location1.Y=2532.249mil|Location2.Y=2655.546mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3360.438mil|Location2.X=3483.735mil|Location1.Y=2532.249mil|Location2.Y=2655.546mil|Absolute=True">Hole Size Constraint: (122.047mil &gt; 100mil) Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer Actual Hole Size = 122.047mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3359.611mil|Location2.X=3482.908mil|Location1.Y=1073.351mil|Location2.Y=1196.649mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3359.611mil|Location2.X=3482.908mil|Location1.Y=1073.351mil|Location2.Y=1196.649mil|Absolute=True">Hole Size Constraint: (122.047mil &gt; 100mil) Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer Actual Hole Size = 122.047mil</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDAVTXRND5NLAOLBAUPL4MAZUB0EGJ5EG15XVRFZHRZQMY0QC1CBLE"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole To Hole Clearance (Gap=10mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1062.65mil|Location2.X=1073.9mil|Location1.Y=1129.493mil|Location2.Y=1140.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1062.65mil|Location2.X=1073.9mil|Location1.Y=1129.493mil|Location2.Y=1140.743mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1054.004mil,1135.118mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1081.15mil|Location2.X=1092.4mil|Location1.Y=1084.159mil|Location2.Y=1095.409mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1081.15mil|Location2.X=1092.4mil|Location1.Y=1084.159mil|Location2.Y=1095.409mil|Absolute=True">Hole To Hole Clearance Constraint: (8.487mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1076.642mil,1080mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1081.308mil|Location2.X=1092.558mil|Location1.Y=1175.481mil|Location2.Y=1186.731mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1081.308mil|Location2.X=1092.558mil|Location1.Y=1175.481mil|Location2.Y=1186.731mil|Absolute=True">Hole To Hole Clearance Constraint: (9.174mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1076.642mil,1191.22mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1128.103mil|Location2.X=1139.353mil|Location1.Y=1063.548mil|Location2.Y=1074.798mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1128.103mil|Location2.X=1139.353mil|Location1.Y=1063.548mil|Location2.Y=1074.798mil|Absolute=True">Hole To Hole Clearance Constraint: (9.843mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1133.728mil,1054.409mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1128.103mil|Location2.X=1139.353mil|Location1.Y=1194.946mil|Location2.Y=1206.196mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1128.103mil|Location2.X=1139.353mil|Location1.Y=1194.946mil|Location2.Y=1206.196mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1133.728mil,1214.842mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1174.521mil|Location2.X=1185.771mil|Location1.Y=1084.027mil|Location2.Y=1095.277mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1174.521mil|Location2.X=1185.771mil|Location1.Y=1084.027mil|Location2.Y=1095.277mil|Absolute=True">Hole To Hole Clearance Constraint: (7.903mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1190mil,1080mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1174.302mil|Location2.X=1185.552mil|Location1.Y=1175.858mil|Location2.Y=1187.108mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1174.302mil|Location2.X=1185.552mil|Location1.Y=1175.858mil|Location2.Y=1187.108mil|Absolute=True">Hole To Hole Clearance Constraint: (8.857mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1190mil,1191.592mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1193.064mil|Location2.X=1204.314mil|Location1.Y=1129.493mil|Location2.Y=1140.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1193.064mil|Location2.X=1204.314mil|Location1.Y=1129.493mil|Location2.Y=1140.743mil|Absolute=True">Hole To Hole Clearance Constraint: (7.874mil &lt; 10mil) Between Pad Designator11-10(1133.728mil,1135.118mil) on Multi-Layer And Pad Designator11-2(1212.468mil,1135.118mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1061.009mil|Location2.X=1072.259mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1061.009mil|Location2.X=1072.259mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1052.362mil,2593.898mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1079.508mil|Location2.X=1090.758mil|Location1.Y=2542.938mil|Location2.Y=2554.188mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1079.508mil|Location2.X=1090.758mil|Location1.Y=2542.938mil|Location2.Y=2554.188mil|Absolute=True">Hole To Hole Clearance Constraint: (8.487mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1075mil,2538.78mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1079.666mil|Location2.X=1090.916mil|Location1.Y=2634.261mil|Location2.Y=2645.511mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1079.666mil|Location2.X=1090.916mil|Location1.Y=2634.261mil|Location2.Y=2645.511mil|Absolute=True">Hole To Hole Clearance Constraint: (9.174mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1075mil,2650mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1126.462mil|Location2.X=1137.712mil|Location1.Y=2522.328mil|Location2.Y=2533.578mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1126.462mil|Location2.X=1137.712mil|Location1.Y=2522.328mil|Location2.Y=2533.578mil|Absolute=True">Hole To Hole Clearance Constraint: (9.843mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1132.087mil,2513.189mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1126.462mil|Location2.X=1137.712mil|Location1.Y=2653.725mil|Location2.Y=2664.975mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1126.462mil|Location2.X=1137.712mil|Location1.Y=2653.725mil|Location2.Y=2664.975mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1132.087mil,2673.622mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1172.879mil|Location2.X=1184.129mil|Location1.Y=2542.807mil|Location2.Y=2554.057mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1172.879mil|Location2.X=1184.129mil|Location1.Y=2542.807mil|Location2.Y=2554.057mil|Absolute=True">Hole To Hole Clearance Constraint: (7.903mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1188.358mil,2538.78mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1172.66mil|Location2.X=1183.91mil|Location1.Y=2634.637mil|Location2.Y=2645.887mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1172.66mil|Location2.X=1183.91mil|Location1.Y=2634.637mil|Location2.Y=2645.887mil|Absolute=True">Hole To Hole Clearance Constraint: (8.857mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1188.358mil,2650.371mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1191.422mil|Location2.X=1202.672mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1191.422mil|Location2.X=1202.672mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True">Hole To Hole Clearance Constraint: (7.874mil &lt; 10mil) Between Pad Designator12-10(1132.087mil,2593.898mil) on Multi-Layer And Pad Designator12-2(1210.827mil,2593.898mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.009mil|Location2.X=3362.259mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.009mil|Location2.X=3362.259mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3342.362mil,2593.898mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3369.508mil|Location2.X=3380.758mil|Location1.Y=2542.938mil|Location2.Y=2554.188mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3369.508mil|Location2.X=3380.758mil|Location1.Y=2542.938mil|Location2.Y=2554.188mil|Absolute=True">Hole To Hole Clearance Constraint: (8.487mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3365mil,2538.78mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3369.666mil|Location2.X=3380.916mil|Location1.Y=2634.261mil|Location2.Y=2645.511mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3369.666mil|Location2.X=3380.916mil|Location1.Y=2634.261mil|Location2.Y=2645.511mil|Absolute=True">Hole To Hole Clearance Constraint: (9.174mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3365mil,2650mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3416.462mil|Location2.X=3427.712mil|Location1.Y=2522.328mil|Location2.Y=2533.578mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3416.462mil|Location2.X=3427.712mil|Location1.Y=2522.328mil|Location2.Y=2533.578mil|Absolute=True">Hole To Hole Clearance Constraint: (9.843mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3422.087mil,2513.189mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3416.462mil|Location2.X=3427.712mil|Location1.Y=2653.725mil|Location2.Y=2664.975mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3416.462mil|Location2.X=3427.712mil|Location1.Y=2653.725mil|Location2.Y=2664.975mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3422.087mil,2673.622mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3462.879mil|Location2.X=3474.129mil|Location1.Y=2542.807mil|Location2.Y=2554.057mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3462.879mil|Location2.X=3474.129mil|Location1.Y=2542.807mil|Location2.Y=2554.057mil|Absolute=True">Hole To Hole Clearance Constraint: (7.903mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3478.358mil,2538.78mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3462.66mil|Location2.X=3473.91mil|Location1.Y=2634.637mil|Location2.Y=2645.887mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3462.66mil|Location2.X=3473.91mil|Location1.Y=2634.637mil|Location2.Y=2645.887mil|Absolute=True">Hole To Hole Clearance Constraint: (8.857mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3478.358mil,2650.371mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3481.422mil|Location2.X=3492.672mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3481.422mil|Location2.X=3492.672mil|Location1.Y=2588.273mil|Location2.Y=2599.523mil|Absolute=True">Hole To Hole Clearance Constraint: (7.874mil &lt; 10mil) Between Pad Designator13-10(3422.087mil,2593.898mil) on Multi-Layer And Pad Designator13-2(3500.827mil,2593.898mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3350.182mil|Location2.X=3361.432mil|Location1.Y=1129.375mil|Location2.Y=1140.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3350.182mil|Location2.X=3361.432mil|Location1.Y=1129.375mil|Location2.Y=1140.625mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3341.535mil,1135mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3368.682mil|Location2.X=3379.932mil|Location1.Y=1084.041mil|Location2.Y=1095.291mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3368.682mil|Location2.X=3379.932mil|Location1.Y=1084.041mil|Location2.Y=1095.291mil|Absolute=True">Hole To Hole Clearance Constraint: (8.487mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3364.173mil,1079.882mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3368.84mil|Location2.X=3380.09mil|Location1.Y=1175.363mil|Location2.Y=1186.613mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3368.84mil|Location2.X=3380.09mil|Location1.Y=1175.363mil|Location2.Y=1186.613mil|Absolute=True">Hole To Hole Clearance Constraint: (9.174mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3364.173mil,1191.102mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3415.635mil|Location2.X=3426.885mil|Location1.Y=1063.43mil|Location2.Y=1074.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3415.635mil|Location2.X=3426.885mil|Location1.Y=1063.43mil|Location2.Y=1074.68mil|Absolute=True">Hole To Hole Clearance Constraint: (9.843mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3421.26mil,1054.291mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3415.635mil|Location2.X=3426.885mil|Location1.Y=1194.828mil|Location2.Y=1206.078mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3415.635mil|Location2.X=3426.885mil|Location1.Y=1194.828mil|Location2.Y=1206.078mil|Absolute=True">Hole To Hole Clearance Constraint: (8.858mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3421.26mil,1214.724mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3462.052mil|Location2.X=3473.302mil|Location1.Y=1083.909mil|Location2.Y=1095.159mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3462.052mil|Location2.X=3473.302mil|Location1.Y=1083.909mil|Location2.Y=1095.159mil|Absolute=True">Hole To Hole Clearance Constraint: (7.903mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3477.532mil,1079.882mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3461.833mil|Location2.X=3473.083mil|Location1.Y=1175.739mil|Location2.Y=1186.989mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3461.833mil|Location2.X=3473.083mil|Location1.Y=1175.739mil|Location2.Y=1186.989mil|Absolute=True">Hole To Hole Clearance Constraint: (8.857mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3477.532mil,1191.474mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3480.595mil|Location2.X=3491.845mil|Location1.Y=1129.375mil|Location2.Y=1140.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3480.595mil|Location2.X=3491.845mil|Location1.Y=1129.375mil|Location2.Y=1140.625mil|Absolute=True">Hole To Hole Clearance Constraint: (7.874mil &lt; 10mil) Between Pad Designator14-10(3421.26mil,1135mil) on Multi-Layer And Pad Designator14-2(3500mil,1135mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.375mil|Location2.X=1566.625mil|Location1.Y=1734.375mil|Location2.Y=1745.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1555.375mil|Location2.X=1566.625mil|Location1.Y=1734.375mil|Location2.Y=1745.625mil|Absolute=True">Hole To Hole Clearance Constraint: (9mil &lt; 10mil) Between Via (1561mil,1728mil) from Top Layer to Bottom Layer And Via (1561mil,1752mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1566.375mil|Location2.X=1577.625mil|Location1.Y=1722.375mil|Location2.Y=1733.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1566.375mil|Location2.X=1577.625mil|Location1.Y=1722.375mil|Location2.Y=1733.625mil|Absolute=True">Hole To Hole Clearance Constraint: (7mil &lt; 10mil) Between Via (1561mil,1728mil) from Top Layer to Bottom Layer And Via (1583mil,1728mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1566.375mil|Location2.X=1577.625mil|Location1.Y=1746.375mil|Location2.Y=1757.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1566.375mil|Location2.X=1577.625mil|Location1.Y=1746.375mil|Location2.Y=1757.625mil|Absolute=True">Hole To Hole Clearance Constraint: (7mil &lt; 10mil) Between Via (1561mil,1752mil) from Top Layer to Bottom Layer And Via (1583mil,1752mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1577.375mil|Location2.X=1588.625mil|Location1.Y=1734.375mil|Location2.Y=1745.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1577.375mil|Location2.X=1588.625mil|Location1.Y=1734.375mil|Location2.Y=1745.625mil|Absolute=True">Hole To Hole Clearance Constraint: (9mil &lt; 10mil) Between Via (1583mil,1728mil) from Top Layer to Bottom Layer And Via (1583mil,1752mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3234.375mil|Location2.X=3245.625mil|Location1.Y=2339.375mil|Location2.Y=2350.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3234.375mil|Location2.X=3245.625mil|Location1.Y=2339.375mil|Location2.Y=2350.625mil|Absolute=True">Hole To Hole Clearance Constraint: (9mil &lt; 10mil) Between Via (3228mil,2345mil) from Top Layer to Bottom Layer And Via (3252mil,2345mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3234.375mil|Location2.X=3245.625mil|Location1.Y=2372.375mil|Location2.Y=2383.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\Final-Project\HARDWARE\RTLS_Tag\Tag_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3234.375mil|Location2.X=3245.625mil|Location1.Y=2372.375mil|Location2.Y=2383.625mil|Absolute=True">Hole To Hole Clearance Constraint: (9mil &lt; 10mil) Between Via (3228mil,2378mil) from Top Layer to Bottom Layer And Via (3252mil,2378mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

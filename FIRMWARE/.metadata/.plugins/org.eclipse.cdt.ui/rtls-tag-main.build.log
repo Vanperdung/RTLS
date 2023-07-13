@@ -1,0 +1,10 @@
+12:10:30 **** Build of configuration Debug for project rtls-tag-main ****
+make -j8 all 
+arm-none-eabi-size   rtls-tag-main.elf 
+   text	   data	    bss	    dec	    hex	filename
+  56716	    604	   2188	  59508	   e874	rtls-tag-main.elf
+Finished building: default.size.stdout
+ 
+
+12:10:31 Build Finished. 0 errors, 0 warnings. (took 658ms)
+

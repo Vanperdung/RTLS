@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=ETH_RST Pin=IC1-37
+Removed Pin From Net: NetName=ETH_RST Pin=U5-12
+Change Net Name : Old Net Name=ETH_RST New Net Name=RST
+Added Pin To Net: NetName=EHT_RST Pin=IC1-37
+Added Pin To Net: NetName=EHT_RST Pin=U5-12
+Added Net: Name=EHT_RST

@@ -1,0 +1,21 @@
+22:04:55 **** Incremental Build of configuration Debug for project rtls-anchor-main ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xE -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/main.c:39:
+../Core/Inc/message_types.h:20:2: error: invalid preprocessing directive #defineTYPE_RESP
+   20 | #defineTYPE_RESP 0x32
+      |  ^~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:647:46: error: 'TYPE_RESP' undeclared (first use in this function); did you mean 'TYPE_BEAC'?
+  647 |                 respHandle.respMess.messID = TYPE_RESP;
+      |                                              ^~~~~~~~~
+      |                                              TYPE_BEAC
+../Core/Src/main.c:647:46: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:723:16: warning: variable 'tick' set but not used [-Wunused-but-set-variable]
+  723 |       uint16_t tick = 0;
+      |                ^~~~
+make: *** [Core/Src/subdir.mk:49: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+22:04:55 Build Failed. 3 errors, 1 warnings. (took 358ms)
+

@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=DW_NRST Pin=IC6-56
+Removed Pin From Net: NetName=WAKEUP Pin=IC6-57
+Removed Pin From Net: NetName=EXTON Pin=IC6-58
+Change Component Designator: OldDesignator=IC1 NewDesignator=IC2
+Change Component Designator: OldDesignator=IC2 NewDesignator=IC1
+Added Pin To Net: NetName=DW_NRST Pin=IC6-51
+Added Pin To Net: NetName=WAKEUP Pin=IC6-52
+Added Pin To Net: NetName=EXTON Pin=IC6-53

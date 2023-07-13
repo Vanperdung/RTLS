@@ -1,0 +1,4 @@
+Record=TopLevelDocument|FileName=TAG.SchDoc|SheetNumber= 
+Record=SheetSymbol|SourceDocument=TAG.SchDoc|Designator=U_DW1000|SchDesignator=U_DW1000|FileName=DW1000.SchDoc|SheetNumber= |SymbolType=Normal|RawFileName=DW1000.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=TAG.SchDoc|Designator=U_POWER|SchDesignator=U_POWER|FileName=POWER.SchDoc|SheetNumber= |SymbolType=Normal|RawFileName=POWER.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=TAG.SchDoc|Designator=U_STM32|SchDesignator=U_STM32|FileName=STM32.SchDoc|SheetNumber= |SymbolType=Normal|RawFileName=STM32.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 

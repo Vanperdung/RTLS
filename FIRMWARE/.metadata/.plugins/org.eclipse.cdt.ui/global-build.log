@@ -1,0 +1,266 @@
+17:28:16 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65708	    612	   2592	  68912	  10d30	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 
+17:55:42 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 
+17:56:54 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 
+17:57:32 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-size   rtls_tag.elf 
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+18:04:48 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+Finished building: rtls_tag.hex
+ 
+ 
+Finished building: rtls_tag.list
+ 
+18:05:52 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+Finished building: rtls_tag.hex
+ 
+ 
+Finished building: rtls_tag.list
+ 
+19:21:20 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+Finished building: rtls_tag.hex
+ 
+ 
+Finished building: rtls_tag.list
+ 
+19:22:01 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 
+19:40:12 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  65700	    612	   2592	  68904	  10d28	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 
+19:51:41 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  64412	    612	   2592	  67616	  10820	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 
+18:04:17 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  63868	    612	   2592	  67072	  10600	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 
+18:04:39 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-size   rtls_tag.elf 
+   text	   data	    bss	    dec	    hex	filename
+  63868	    612	   2592	  67072	  10600	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+18:24:22 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  63868	    612	   2592	  67072	  10600	rtls_tag.elf
+Finished building: default.size.stdout
+Finished building: rtls_tag.hex
+ 
+ 
+Finished building: rtls_tag.list
+ 
+18:25:53 **** Incremental Build of configuration Debug for project rtls_tag ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Core/User -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:700:43: warning: taking address of packed member of 'struct <anonymous>' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  700 |               getFourAnchor(beaconHandle, &pollHandle.pollMess.bcnSlotBitmap);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "rtls_tag.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Final-Project\FIRMWARE\rtls_tag\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rtls_tag.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rtls_tag.elf
+ 
+arm-none-eabi-size   rtls_tag.elf 
+arm-none-eabi-objdump -h -S  rtls_tag.elf  > "rtls_tag.list"
+arm-none-eabi-objcopy  -O ihex  rtls_tag.elf  "rtls_tag.hex"
+   text	   data	    bss	    dec	    hex	filename
+  63868	    612	   2592	  67072	  10600	rtls_tag.elf
+Finished building: default.size.stdout
+ 
+Finished building: rtls_tag.hex
+ 
+Finished building: rtls_tag.list
+ 

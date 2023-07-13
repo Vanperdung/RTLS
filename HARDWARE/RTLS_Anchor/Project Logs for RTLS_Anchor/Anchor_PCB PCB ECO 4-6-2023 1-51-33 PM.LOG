@@ -1,0 +1,7 @@
+Added Component: Designator=AN1(Antenna)
+Added Member To Class: ClassName=U_ESP32 Member=Component AN1 Antenna
+Added Room: Name=U_DW1000
+Added Room: Name=U_ESP32
+Added Room: Name=U_ETHERNET
+Added Room: Name=U_POWER
+Added Room: Name=U_STM32

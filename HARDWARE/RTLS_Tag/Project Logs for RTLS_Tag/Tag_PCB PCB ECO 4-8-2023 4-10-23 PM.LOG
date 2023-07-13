@@ -1,0 +1,19 @@
+Removed Pin From Net: NetName=UART1_RXD Pin=IC6-25
+Removed Pin From Net: NetName=UART1_TXD Pin=IC6-26
+Removed Pin From Net: NetName=SPI1_CS Pin=IC6-51
+Removed Pin From Net: NetName=SPI1_CLK Pin=IC6-52
+Removed Pin From Net: NetName=SPI1_MISO Pin=IC6-53
+Removed Pin From Net: NetName=SPI1_MOSI Pin=IC6-54
+Removed Pin From Net: NetName=IRQ Pin=IC6-55
+Removed Member From Class: ClassName=U_POWER Member=IC6
+Added Pin To Net: NetName=SPI1_CS Pin=IC6-29
+Added Pin To Net: NetName=SPI1_CLK Pin=IC6-30
+Added Pin To Net: NetName=SPI1_MISO Pin=IC6-31
+Added Pin To Net: NetName=SPI1_MOSI Pin=IC6-32
+Added Pin To Net: NetName=IRQ Pin=IC6-33
+Added Pin To Net: NetName=UART1_RXD Pin=IC6-92
+Added Pin To Net: NetName=UART1_TXD Pin=IC6-93
+Added Member To Class: ClassName=U_POWER Member=Component IC1 RT9013
+Added Member To Class: ClassName=U_POWER Member=Component IC2 RT9013
+Added Member To Class: ClassName=U_POWER Member=Component IC3 TP4056
+Added Member To Class: ClassName=U_POWER Member=Component IC5 FS8205A

@@ -1,0 +1,46 @@
+Added Component: Designator=IC2(STM32F407VET6)
+Added Pin To Net: NetName=GND Pin=IC2-10
+Added Pin To Net: NetName=+3.3V Pin=IC2-11
+Added Pin To Net: NetName=NetC49_2 Pin=IC2-12
+Added Pin To Net: NetName=NetC50_2 Pin=IC2-13
+Added Pin To Net: NetName=NRST Pin=IC2-14
+Added Pin To Net: NetName=+3.3V Pin=IC2-19
+Added Pin To Net: NetName=GND Pin=IC2-20
+Added Pin To Net: NetName=NetIC2_21 Pin=IC2-21
+Added Pin To Net: NetName=+3.3V Pin=IC2-22
+Added Pin To Net: NetName=GND Pin=IC2-27
+Added Pin To Net: NetName=+3.3V Pin=IC2-28
+Added Pin To Net: NetName=SPI1_CS Pin=IC2-29
+Added Pin To Net: NetName=SPI1_CLK Pin=IC2-30
+Added Pin To Net: NetName=SPI1_MISO Pin=IC2-31
+Added Pin To Net: NetName=SPI1_MOSI Pin=IC2-32
+Added Pin To Net: NetName=RST Pin=IC2-33
+Added Pin To Net: NetName=WAKEUP Pin=IC2-34
+Added Pin To Net: NetName=EXTON Pin=IC2-35
+Added Pin To Net: NetName=IRQ Pin=IC2-36
+Added Pin To Net: NetName=NetC51_1 Pin=IC2-49
+Added Pin To Net: NetName=+3.3V Pin=IC2-50
+Added Pin To Net: NetName=RXD2 Pin=IC2-63
+Added Pin To Net: NetName=TXD2 Pin=IC2-64
+Added Pin To Net: NetName=IN Pin=IC2-65
+Added Pin To Net: NetName=INPUT Pin=IC2-66
+Added Pin To Net: NetName=UART1_TXD Pin=IC2-68
+Added Pin To Net: NetName=UART1_RXD Pin=IC2-69
+Added Pin To Net: NetName=SWDIO Pin=IC2-72
+Added Pin To Net: NetName=NetC48_1 Pin=IC2-73
+Added Pin To Net: NetName=GND Pin=IC2-74
+Added Pin To Net: NetName=+3.3V Pin=IC2-75
+Added Pin To Net: NetName=SWCLK Pin=IC2-76
+Added Pin To Net: NetName=LED1 Pin=IC2-81
+Added Pin To Net: NetName=LED2 Pin=IC2-82
+Added Pin To Net: NetName=LED3 Pin=IC2-83
+Added Pin To Net: NetName=BUT Pin=IC2-88
+Added Pin To Net: NetName=NetIC2_94 Pin=IC2-94
+Added Pin To Net: NetName=GND Pin=IC2-99
+Added Pin To Net: NetName=+3.3V Pin=IC2-100
+Added Member To Class: ClassName=U_STM32 Member=Component IC2 STM32F407VET6
+Added Room: Name=U_DW1000
+Added Room: Name=U_ESP32
+Added Room: Name=U_ETHERNET
+Added Room: Name=U_POWER
+Added Room: Name=U_STM32

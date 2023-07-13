@@ -1,0 +1,804 @@
+/* USER CODE BEGIN Header */
+/**
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "i2c.h"
+#include "spi.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stddef.h>
+#include "decawave/dw_api.h"
+#include "log/log.h"
+#include "mac/mac.h"
+#include "message_types.h"
+#include "rtls_types.h"
+#include "uart_types.h"
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+typedef struct
+{
+  bool anchorCfg;
+  bool anchorSync;
+  bool rxBufAvai;
+  bool anchorSfSync;
+  uint8_t notSyncCnt;
+  uint16_t timeSyncRecv;
+  uint16_t timeSyncEnd;
+  uint16_t timeOffsetStart;
+  uint16_t timeOffsetEnd;
+  uint8_t locCnt;
+} systemHandle_t;
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+#define TEST
+#define X 0
+#define Y 2.0
+#ifdef __GNUC__
+int __io_putchar(int ch)
+#else
+int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+{
+  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 1);
+  return ch;
+}
+
+#define RX_BEACON_TIMEOUT 600
+#define RX_POLL_TIMEOUT 600
+#define RX_LOC_TIMEOUT 500
+#define RESP_DELAY 360
+#define US_TO_DECAWAVE_TICK 63898
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+
+/* USER CODE BEGIN PV */
+static const uint8_t anchorBaseAddr[2] = {0x89, 0x00};
+systemHandle_t systemHandle = {0};
+cfgAnchor_t cfgAnchor = {0};
+myAnchorTypes_t myAnchor = {0};
+
+// Default superframe info
+sfInfo_t superframe = {
+    .bcnSlotTotal = BCN_SLOT_TOTAL,
+    .twrSlotTotal = TWR_SLOT_TOTAL,
+    .sfNumberTotal = SF_NUMBER_DEFAULT,
+    .sfOffset = 235,
+    .bcnSlotCurrent = 0,
+    .sfNumberCurrent = 0,
+    .twrSlotCurrent = 0,
+};
+
+dwDeviceTypes_t device = {
+    .extendedFrameLength = FRAME_LENGTH_NORMAL,
+    .pacSize = PAC_SIZE_8,
+    .pulseFrequency = TX_PULSE_FREQ_64MHZ,
+    .dataRate = TRX_RATE_6800KBPS,
+    .preambleLength = TX_PREAMBLE_LEN_128,
+    .preambleCode = PREAMBLE_CODE_64MHZ_9,
+    .channel = CHANNEL_2,
+    .smartPower = true,
+    .frameCheck = true,
+    .permanentReceive = false,
+    .deviceMode = IDLE_MODE,
+    .forceTxPower = false,
+};
+
+uint8_t rxBuffer[512] = {0};
+uint8_t rxByte = 0;
+int rxIndex = 0;
+rxState_t rxState;
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+void dwInteruptHandler(void)
+{
+  // dwReadSystemEventStatusRegister(&device);
+  if (dwIsTransmitDone(&device))
+  {
+    dwClearTransmitStatus(&device);
+  }
+  if (dwIsReceiveTimestampAvailable(&device))
+  {
+    dwClearReceiveTimestampAvailableStatus(&device);
+  }
+  if (dwIsReceiveFailed(&device))
+  {
+    dwClearReceiveStatus(&device);
+    dwRxSoftReset(&device);
+  }
+  if (dwIsReceiveTimeout(&device))
+  {
+    dwClearReceiveStatus(&device);
+    dwRxSoftReset(&device);
+  }
+  if (dwIsReceiveDone(&device))
+  {
+    dwClearReceiveStatus(&device);
+  }
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  if (rxState == WAIT_START_BYTE)
+  {
+    if (rxByte == '$')
+    {
+      rxState = WAIT_END_BYTE;
+      rxBuffer[rxIndex++] = rxByte;
+      HAL_UART_Receive_IT(&huart1, &rxByte, sizeof(rxByte));
+    }
+    else
+    {
+      memset(rxBuffer, 0, sizeof(rxBuffer));
+      rxIndex = 0;
+      HAL_UART_Receive_IT(&huart1, &rxByte, sizeof(rxByte));
+    }
+  }
+  else
+  {
+    rxBuffer[rxIndex++] = rxByte;
+    if (rxByte == '*')
+    {
+      rxState = WAIT_START_BYTE;
+      systemHandle.rxBufAvai = true;
+    }
+    else
+    {
+      HAL_UART_Receive_IT(&huart1, &rxByte, sizeof(rxByte));
+    }
+  }
+}
+
+int findAddress(uint8_t *str, uint8_t *sub, int n)
+{
+  for (int i = 0; i < n; i += 2)
+  {
+    if (str[i] == sub[0] && str[i + 1] == sub[1])
+      return i;
+  }
+  return -1;
+}
+/* USER CODE END 0 */
+
+/**
+ * @brief  The application entry point.
+ * @retval int
+ */
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
+  beaconHandle_t beaconHandle = {0};
+  pollHandle_t pollHandle = {0};
+  respHandle_t respHandle = {0};
+  locMess_t locMess = {0};
+  packet_t beaconPacket = {0};
+  packet_t pollPacket = {0};
+  packet_t respPacket = {0};
+  packet_t locPacket = {0};
+  packet_t bufPacket = {0};
+
+  uint32_t bcnTimes[BCN_SLOT_TOTAL] = {0};
+  uint32_t twrTimes[TWR_SLOT_TOTAL] = {0};
+  uint32_t uartTime = 0;
+
+  uint16_t bcnStart[BCN_SLOT_TOTAL];
+  uint16_t bcnUwb[BCN_SLOT_TOTAL];
+  uint16_t bcnStop[BCN_SLOT_TOTAL];
+  uint16_t twrStart[TWR_SLOT_TOTAL];
+  uint16_t twrUwb[TWR_SLOT_TOTAL];
+  uint16_t twrStop[TWR_SLOT_TOTAL];
+  // anchorTypes_t anchor[BCN_SLOT_TOTAL] = {0};
+  // tagTypes_t *tag = NULL;
+  provTag_t provTag = {0};
+  delTag_t delTag = {0};
+  tagLoc_t *tagLoc = NULL;
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_I2C1_Init();
+  MX_SPI1_Init();
+  MX_USART1_UART_Init();
+  MX_USART3_UART_Init();
+  MX_TIM1_Init();
+  MX_TIM2_Init();
+  /* USER CODE BEGIN 2 */
+  logi("ANCHOR START");
+  for (uint32_t i = 0; i < superframe.bcnSlotTotal; i++)
+  {
+    bcnTimes[i] = SF_BCN_SLOT_TIME * i / 2;
+  }
+  for (uint32_t j = 0; j < superframe.twrSlotTotal; j++)
+  {
+    twrTimes[j] = (SF_TWR_SLOT_TIME * j + SF_BCN_SLOT_TIME * superframe.bcnSlotTotal) / 2;
+  }
+  uartTime = (SF_TWR_SLOT_TIME * superframe.twrSlotTotal + SF_BCN_SLOT_TIME * superframe.bcnSlotTotal) / 2;
+#ifndef TEST
+  HAL_UART_Receive_IT(&huart1, &rxByte, sizeof(rxByte));
+  while (!(systemHandle.anchorCfg == true))
+  {
+    if (systemHandle.rxBufAvai == true)
+    {
+      uint8_t command[10] = {0};
+      sscanf(rxBuffer, "$%s,", command);
+      if (strstr(command, "cfgAn"))
+      {
+        sscanf(rxBuffer, "$cfgAn,%s,%d,%f,%f,%d,*", cfgAnchor.anchorAddr, &cfgAnchor.bcnSlotNum, &cfgAnchor.x.xVal, &cfgAnchor.y.yVal, &cfgAnchor.sfTotal);
+        if (cfgAnchor.bcnSlotNum < BCN_SLOT_TOTAL)
+        {
+        }
+      }
+      else if (strstr(command, "provTag"))
+      {
+      }
+      else if (strstr(command, "delTag"))
+      {
+      }
+      else if (strstr(command, "delAn"))
+      {
+      }
+      else if (strstr(command, "cfgSf"))
+      {
+      }
+      else if (strstr(command, "cfgLoc"))
+      {
+      }
+      systemHandle.rxBufAvai = false;
+    }
+  }
+  if (systemHandle.anchorMain == true)
+  {
+    systemHandle.anchorSync = true;
+  }
+#endif
+
+#ifdef TEST
+  // for (int j = 0; j < superframe.bcnSlotTotal; j++)
+  // {
+  //   anchor[j].anchorAddress[0] = 0x89;
+  //   anchor[j].anchorAddress[1] = j;
+  //   anchor[j].bcnSlotNumber = j;
+  // }
+
+  // tag = (tagTypes_t *)calloc(superframe.sfNumberTotal * superframe.bcnSlotTotal, sizeof(tagTypes_t));
+  // for (int j = 0; j < superframe.sfNumberTotal * superframe.bcnSlotTotal; j++)
+  // {
+  //   tag[j].tagAddress[0] = 0x21;
+  //   tag[j].tagAddress[1] = j;
+  //   tag[j].twrSlotNumber = j;
+  // }
+
+  if (anchorBaseAddr[1] == 0x00)
+  {
+    myAnchor.anchorMain = true;
+    memcpy(myAnchor.anchorAddress, anchorBaseAddr, sizeof(anchorBaseAddr));
+    myAnchor.bcnSlotNumber = 0;
+    myAnchor.x.xVal = X;
+    myAnchor.y.yVal = Y;
+  }
+  else
+  {
+    myAnchor.anchorMain = false;
+    memcpy(myAnchor.anchorAddress, anchorBaseAddr, sizeof(anchorBaseAddr));
+    myAnchor.bcnSlotNumber = anchorBaseAddr[1];
+    myAnchor.x.xVal = X;
+    myAnchor.y.yVal = Y;
+  }
+
+  provTag.tagAddr[0] = 0x21;
+  provTag.tagAddr[1] = 0;
+  provTag.twrSlotNum = 0;
+  myAnchor.bcnFlag = PROV_TAG;
+  myAnchor.extCnt = 5;
+#endif
+
+  tagLoc = (tagLoc_t *)calloc(superframe.twrSlotTotal, sizeof(tagLoc_t));
+  dwInit(&device);
+  if (dwConfigure(&device) == DW_ERROR_OK)
+  {
+    dwEnableAllLeds(&device);
+  }
+  else
+  {
+    loge("Configure failed");
+    while (1)
+      ;
+  }
+  dwNewConfiguration(&device);
+  dwSetDefaults(&device);
+  dwCommitConfiguration(&device);
+  HAL_TIM_Base_Start(&htim2);
+  TIM1->CNT = 0;
+  HAL_TIM_Base_Start(&htim1);
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    if (myAnchor.anchorMain == true)
+    {
+      systemHandle.anchorSync = true;
+    }
+    if (!systemHandle.anchorSync)
+    {
+      // Sync clock
+      dwNewReceive(&device);
+      dwSetDefaults(&device);
+      dwStartReceive(&device);
+      do
+      {
+        dwReadSystemEventStatusRegister(&device);
+      } while (!((device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8)) || (device.sysstatus[2] & ((1 << RXRFTO_BIT) >> 16))));
+      if (device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8))
+      {
+        systemHandle.timeSyncRecv = TIM1->CNT;
+        dwInteruptHandler();
+        memset(&bufPacket, 0, sizeof(bufPacket));
+        int length = dwGetDataLength(&device);
+        if (length > 0)
+        {
+          dwGetData(&device, (uint8_t *)&bufPacket, length);
+          if (bufPacket.payload[BEAC_ID] == TYPE_BEAC)
+          {
+            uint8_t bcnSlotNum = bufPacket.payload[BEAC_BCN_SLOT_NUM];
+            uint8_t sfNumCurrent = bufPacket.payload[BEAC_SF_NUM];
+            if (bcnSlotNum < superframe.bcnSlotTotal && sfNumCurrent < superframe.sfNumberTotal)
+            {
+              systemHandle.timeSyncEnd = TIM1->CNT;
+              if (systemHandle.timeSyncEnd > systemHandle.timeSyncRecv)
+              {
+                TIM1->CNT = bcnTimes[bcnSlotNum] + superframe.sfOffset + systemHandle.timeSyncEnd - systemHandle.timeSyncRecv;
+              }
+              else
+              {
+                TIM1->CNT = bcnTimes[bcnSlotNum] + superframe.sfOffset + systemHandle.timeSyncEnd + 50000 - systemHandle.timeSyncRecv;
+              }
+              superframe.sfNumberCurrent = sfNumCurrent;
+              systemHandle.anchorSync = true;
+              systemHandle.notSyncCnt = 0;
+            }
+          }
+        }
+      }
+      else
+      {
+        dwInteruptHandler();
+      }
+    }
+    else
+    {
+      // New superframe
+      memset(bcnStart, 0, sizeof(bcnStart));
+      memset(bcnStop, 0, sizeof(bcnStop));
+      memset(bcnUwb, 0, sizeof(bcnUwb));
+      while (!((TIM1->CNT > 0) && (TIM1->CNT < 10)))
+        ;
+      if (superframe.sfNumberCurrent == superframe.sfNumberTotal - 1)
+      {
+        superframe.sfNumberCurrent = 0;
+      }
+      else
+      {
+        superframe.sfNumberCurrent++;
+      }
+      memset(&beaconHandle, 0, sizeof(beaconHandle));
+      if (myAnchor.extCnt > 0)
+      {
+        // Add extend part into Beacon Message
+        if (myAnchor.bcnFlag == PROV_TAG)
+        {
+          beaconHandle.beaconMess.flag = (1 << PROV_TAG);
+        }
+        else if (myAnchor.bcnFlag == DEL_TAG)
+        {
+          beaconHandle.beaconMess.flag = (1 << DEL_TAG);
+        }
+        memcpy(beaconHandle.beaconMess.beaconExt.tagAddr, provTag.tagAddr, sizeof(provTag.tagAddr));
+        beaconHandle.beaconMess.beaconExt.twrSlotNumber = provTag.twrSlotNum;
+        myAnchor.extCnt--;
+        if (myAnchor.extCnt == 0)
+        {
+          if (myAnchor.bcnFlag == PROV_TAG)
+          {
+            memset(&provTag, 0, sizeof(provTag));
+            myAnchor.bcnFlag = NONE;
+          }
+          else if (myAnchor.bcnFlag == DEL_TAG)
+          {
+            memset(&delTag, 0, sizeof(delTag));
+            myAnchor.bcnFlag = NONE;
+          }
+        }
+      }
+      else
+      {
+        beaconHandle.beaconMess.flag = 0;
+      }
+      if (myAnchor.anchorMain)
+      {
+        bcnStart[0] = TIM1->CNT;
+        // Anchor Main
+        while (TIM1->CNT < 50)
+          ;
+        beaconHandle.beaconMess.messID = TYPE_BEAC;
+        beaconHandle.beaconMess.sfNumber = superframe.sfNumberCurrent;
+        beaconHandle.beaconMess.bcnSlotNumber = 0;
+        memset(&beaconPacket, 0, sizeof(beaconPacket));
+        MAC80215_PACKET_INIT(beaconPacket, MAC802154_TYPE_DATA);
+        memset(beaconPacket.destAddress, 0xFF, 2);
+        memcpy(beaconPacket.sourceAddress, myAnchor.anchorAddress, sizeof(myAnchor.anchorAddress));
+        memcpy(beaconPacket.payload, (uint8_t *)&beaconHandle.beaconMess, sizeof(beaconHandle.beaconMess));
+        dwNewTransmit(&device);
+        dwSetDefaults(&device);
+        dwSetData(&device, (uint8_t *)&beaconPacket, MAC802154_HEADER_LENGTH + sizeof(beaconHandle.beaconMess));
+        dwStartTransmit(&device, false);
+        do
+        {
+          dwReadSystemEventStatusRegister(&device);
+        } while (!(device.sysstatus[0] & (1 << TXFRS_BIT)));
+        bcnUwb[0] = TIM1->CNT;
+        dwInteruptHandler();
+        bcnStop[0] = TIM1->CNT;
+      }
+      else
+      {
+        superframe.bcnSlotCurrent = 0;
+        systemHandle.anchorSfSync = false;
+        while (superframe.bcnSlotCurrent < superframe.bcnSlotTotal)
+        {
+          while (TIM1->CNT < bcnTimes[superframe.bcnSlotCurrent])
+            ;
+          bcnStart[superframe.bcnSlotCurrent] = TIM1->CNT;
+          if (myAnchor.bcnSlotNumber == superframe.bcnSlotCurrent)
+          {
+            while (TIM1->CNT < bcnTimes[superframe.bcnSlotCurrent] + 50)
+              ;
+            beaconHandle.beaconMess.messID = TYPE_BEAC;
+            beaconHandle.beaconMess.sfNumber = superframe.sfNumberCurrent;
+            beaconHandle.beaconMess.bcnSlotNumber = superframe.bcnSlotCurrent;
+            memset(&beaconPacket, 0, sizeof(beaconPacket));
+            MAC80215_PACKET_INIT(beaconPacket, MAC802154_TYPE_DATA);
+            memset(beaconPacket.destAddress, 0xFF, 2);
+            memcpy(beaconPacket.sourceAddress, myAnchor.anchorAddress, sizeof(myAnchor.anchorAddress));
+            memcpy(beaconPacket.payload, (uint8_t *)&beaconHandle.beaconMess, sizeof(beaconHandle.beaconMess));
+            dwNewTransmit(&device);
+            dwSetDefaults(&device);
+            dwSetData(&device, (uint8_t *)&beaconPacket, MAC802154_HEADER_LENGTH + sizeof(beaconHandle.beaconMess));
+            dwStartTransmit(&device, false);
+            do
+            {
+              dwReadSystemEventStatusRegister(&device);
+            } while (!(device.sysstatus[0] & (1 << TXFRS_BIT)));
+            bcnUwb[superframe.bcnSlotCurrent] = TIM1->CNT;
+            dwInteruptHandler();
+          }
+          else
+          {
+            dwSetReceiveWaitTimeout(&device, RX_BEACON_TIMEOUT);
+            dwWriteSystemConfigurationRegister(&device);
+            dwNewReceive(&device);
+            dwSetDefaults(&device);
+            dwStartReceive(&device);
+            do
+            {
+              dwReadSystemEventStatusRegister(&device);
+            } while (!((device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8)) || (device.sysstatus[2] & ((1 << RXRFTO_BIT) >> 16))));
+            systemHandle.timeSyncRecv = TIM1->CNT;
+            bcnUwb[superframe.bcnSlotCurrent] = TIM1->CNT;
+            dwInteruptHandler();
+            if (device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8))
+            {
+              int length = dwGetDataLength(&device);
+              if (length > 0)
+              {
+                memset(&beaconPacket, 0, sizeof(beaconPacket));
+                dwGetData(&device, (uint8_t *)&beaconPacket, length);
+                if (beaconPacket.payload[BEAC_ID] == TYPE_BEAC)
+                {
+                  systemHandle.timeSyncEnd = TIM1->CNT;
+                  if (systemHandle.anchorSfSync == false)
+                  {
+                    if (systemHandle.timeSyncEnd > systemHandle.timeSyncRecv)
+                    {
+                      TIM1->CNT = bcnTimes[beaconPacket.payload[BEAC_BCN_SLOT_NUM]] + superframe.sfOffset + systemHandle.timeSyncEnd - systemHandle.timeSyncRecv;
+                    }
+                    else
+                    {
+                      TIM1->CNT = bcnTimes[beaconPacket.payload[BEAC_BCN_SLOT_NUM]] + superframe.sfOffset + systemHandle.timeSyncEnd + 50000 - systemHandle.timeSyncRecv;
+                    }
+                    systemHandle.anchorSfSync = true;
+                  }
+                  // memset(&beaconHandle, 0, sizeof(beaconHandle));
+                  // memcpy(&beaconHandle.beaconMess, beaconPacket.payload, sizeof(beaconHandle.beaconMess));
+                }
+              }
+            }
+            else
+            {
+            }
+          }
+          bcnStop[superframe.bcnSlotCurrent] = TIM1->CNT;
+          superframe.bcnSlotCurrent++;
+        }
+        if (systemHandle.anchorSfSync == true)
+        {
+          systemHandle.notSyncCnt = 0;
+        }
+        else
+        {
+          systemHandle.notSyncCnt++;
+          if (systemHandle.notSyncCnt >= 5)
+          {
+            systemHandle.anchorSync = false;
+          }
+        }
+      }
+      // TWR
+      memset(twrStart, 0, sizeof(twrStart));
+      memset(twrStop, 0, sizeof(twrStop));
+      memset(twrUwb, 0, sizeof(twrUwb));
+      superframe.twrSlotCurrent = 0;
+      systemHandle.locCnt = 0;
+      memset(tagLoc, 0, superframe.twrSlotTotal * sizeof(tagLoc_t));
+      while (superframe.twrSlotCurrent < superframe.twrSlotTotal)
+      {
+        while (TIM1->CNT < twrTimes[superframe.twrSlotCurrent])
+          ;
+        twrStart[superframe.twrSlotCurrent] = TIM1->CNT;
+        dwSetReceiveWaitTimeout(&device, RX_POLL_TIMEOUT);
+        dwWriteSystemConfigurationRegister(&device);
+        dwNewReceive(&device);
+        dwSetDefaults(&device);
+        dwStartReceive(&device);
+        do
+        {
+          dwReadSystemEventStatusRegister(&device);
+        } while (!((device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8)) || (device.sysstatus[2] & ((1 << RXRFTO_BIT) >> 16))));
+        twrUwb[superframe.twrSlotCurrent] = TIM1->CNT;
+        dwInteruptHandler();
+        if (device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8))
+        {
+          int length = dwGetDataLength(&device);
+          if (length > 0)
+          {
+            memset(&pollPacket, 0, sizeof(pollPacket));
+            dwGetData(&device, (uint8_t *)&pollPacket, length);
+            if (pollPacket.payload[POLL_ID] == TYPE_POLL)
+            {
+              memset(&pollHandle, 0, sizeof(pollHandle));
+              memcpy(&pollHandle.pollMess, pollPacket.payload, sizeof(pollHandle.pollMess));
+              int myAddrIndex = findAddress(pollHandle.pollMess.anchorAddr, myAnchor.anchorAddress, sizeof(pollHandle.pollMess.anchorAddr));
+              if (myAddrIndex != -1)
+              {
+                // Have my address
+                dwGetReceiveTimestamp(&device, &pollHandle.timestamp);
+                int myRespIndex = myAddrIndex / 2;
+                while (TIM1->CNT < twrTimes[superframe.twrSlotCurrent] + (SF_POLL_SLOT_TIME + myRespIndex * SF_RESP_SLOT_TIME) / 2)
+                  ;
+                memset(&respPacket, 0, sizeof(respPacket));
+                memset(&respHandle, 0, sizeof(respHandle));
+                MAC80215_PACKET_INIT(respPacket, MAC802154_TYPE_DATA);
+                memcpy(respPacket.destAddress, pollPacket.sourceAddress, sizeof(pollPacket.sourceAddress));
+                memcpy(respPacket.sourceAddress, myAnchor.anchorAddress, sizeof(myAnchor.anchorAddress));
+                respHandle.respMess.messID = TYPE_RESP;
+                respHandle.respMess.x.xVal = myAnchor.x.xVal;
+                respHandle.respMess.y.yVal = myAnchor.y.yVal;
+                memcpy(respHandle.respMess.rxTimestamp.timeRaw, pollHandle.timestamp.timeRaw, sizeof(pollHandle.timestamp.timeRaw));
+                uint64_t delayTx = US_TO_DECAWAVE_TICK * RESP_DELAY;
+                respHandle.timestamp.timeFull = dwSetTxDelay(&device, delayTx);
+                memcpy(respHandle.respMess.txTimestamp.timeRaw, respHandle.timestamp.timeRaw, sizeof(respHandle.timestamp.timeRaw));
+                memcpy(respPacket.payload, (uint8_t *)&respHandle.respMess, sizeof(respHandle.respMess));
+                dwNewTransmit(&device);
+                dwSetDefaults(&device);
+                dwSetData(&device, (uint8_t *)&respPacket, MAC802154_HEADER_LENGTH + sizeof(respHandle.respMess));
+                dwStartTransmit(&device, true);
+                do
+                {
+                  dwReadSystemEventStatusRegister(&device);
+                } while (!(device.sysstatus[0] & (1 << TXFRS_BIT)));
+                dwInteruptHandler();
+                while (TIM1->CNT < twrTimes[superframe.twrSlotCurrent] + (SF_POLL_SLOT_TIME + 4 * SF_RESP_SLOT_TIME) / 2)
+                  ;
+                dwSetReceiveWaitTimeout(&device, RX_LOC_TIMEOUT);
+                dwWriteSystemConfigurationRegister(&device);
+                dwNewReceive(&device);
+                dwSetDefaults(&device);
+                dwStartReceive(&device);
+                do
+                {
+                  dwReadSystemEventStatusRegister(&device);
+                } while (!((device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8)) || (device.sysstatus[2] & ((1 << RXRFTO_BIT) >> 16))));
+                dwInteruptHandler();
+                if (device.sysstatus[1] & (((1 << RXDFR_BIT) | (1 << RXFCG_BIT)) >> 8))
+                {
+                  int length = dwGetDataLength(&device);
+                  if (length > 0)
+                  {
+                    memset(&locPacket, 0, sizeof(locPacket));
+                    memset(&locMess, 0, sizeof(locMess));
+                    dwGetData(&device, (uint8_t *)&locPacket, length);
+                    if (locPacket.payload[LOC_ID] == TYPE_LOC)
+                    {
+                      memcpy((uint8_t *)&locMess, locPacket.payload, sizeof(locMess));
+                      memcpy(tagLoc[systemHandle.locCnt].tagAddress, locPacket.sourceAddress, sizeof(locPacket.sourceAddress));
+                      tagLoc[systemHandle.locCnt].twrSlotNumber = locMess.twrSlotNumber;
+                      tagLoc[systemHandle.locCnt].x.xVal = locMess.x.xVal;
+                      tagLoc[systemHandle.locCnt].y.yVal = locMess.y.yVal;
+                      systemHandle.locCnt++;
+                    }
+                  }
+                }
+                else
+                {
+                  twrStop[superframe.twrSlotCurrent] = TIM1->CNT;
+                  int test = 0;
+                  test++;
+                }
+              }
+            }
+          }
+        }
+        twrStop[superframe.twrSlotCurrent] = TIM1->CNT;
+        superframe.twrSlotCurrent++;
+      }
+      //       UART
+      while (TIM1->CNT < uartTime)
+        ;
+      // if (systemHandle.locCnt > 0)
+      // {
+      //   uint8_t *tagPayload = calloc(sizeof(tagLoc_t) * systemHandle.locCnt + 13, sizeof(uint8_t));
+      //   sprintf((char *)tagPayload, "$Loc,%s,*", (char *)tagLoc);
+      //   HAL_UART_Transmit(&huart1, tagPayload, sizeof(tagLoc_t) * systemHandle.locCnt + 13, 1000);
+      //   free(tagPayload);
+      // }
+      // else
+      // {
+      //   HAL_UART_Transmit(&huart1, (uint8_t *)"$NoLoc*", sizeof("$NoLoc*"), 1000);
+      // }
+      uint8_t data[128] = {0};
+      uint16_t tick = 0;
+      TIM2->CNT = 0;
+      HAL_UART_Transmit(&huart1, data, sizeof(data), 100);
+      tick = TIM2->CNT;
+    }
+  }
+  /* USER CODE END 3 */
+}
+
+/**
+ * @brief System Clock Configuration
+ * @retval None
+ */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+   * in the RCC_OscInitTypeDef structure.
+   */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/* USER CODE BEGIN 4 */
+
+/* USER CODE END 4 */
+
+/**
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef USE_FULL_ASSERT
+/**
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */

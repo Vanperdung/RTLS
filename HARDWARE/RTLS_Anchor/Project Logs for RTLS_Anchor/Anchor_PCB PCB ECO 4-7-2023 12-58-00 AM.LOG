@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=EXTON Pin=IC2-56
+Removed Pin From Net: NetName=DW_NRST Pin=IC2-58
+Added Pin To Net: NetName=DW_NRST Pin=IC2-56
+Added Pin To Net: NetName=EXTON Pin=IC2-58
