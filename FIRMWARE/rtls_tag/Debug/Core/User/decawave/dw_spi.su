@@ -1,0 +1,6 @@
+../Core/User/decawave/dw_spi.c:3:6:dwSpiRead	48	static
+../Core/User/decawave/dw_spi.c:24:10:dwSpiRead16	40	static
+../Core/User/decawave/dw_spi.c:31:10:dwSpiRead32	40	static
+../Core/User/decawave/dw_spi.c:38:6:dwSpiWrite	48	static
+../Core/User/decawave/dw_spi.c:60:6:dwSpiWrite8	32	static
+../Core/User/decawave/dw_spi.c:65:6:dwSpiWrite32	32	static
